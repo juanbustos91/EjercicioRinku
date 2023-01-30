@@ -175,6 +175,4 @@ formFiltros.addEventListener('submit', (e) => {
         .then(data => mostrar(data))
         .catch(error => console.log(error))
 
-
-    modalMovimientos.hide()
 })

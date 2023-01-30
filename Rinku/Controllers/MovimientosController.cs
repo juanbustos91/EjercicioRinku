@@ -24,7 +24,12 @@ namespace Rinku.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movimientos>>> GetMovimientos()
         {
-            return await _context.Movimientos.ToListAsync();
+            var tabMovs = _context.Movimientos.ToList();
+            IEnumerable<Movimientos> movs;
+
+            movs = from m in tabMovs orderby m.Id descending select m;
+
+            return movs.ToList();
         }
 
         // GET: api/Movimientos/5
