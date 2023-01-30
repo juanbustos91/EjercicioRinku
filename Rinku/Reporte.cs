@@ -1,4 +1,15 @@
-﻿namespace Rinku
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Rinku.Models;
+
+namespace Rinku
 {
     public class Reporte
     {
@@ -11,10 +22,11 @@
         public double sueldoTotal { get; set; }
 
 
-        public Reporte()
+        private readonly RinkuContext context;
+
+        public Reporte(RinkuContext context)
         {
-
-
+            this.context = context;
         }
 
         public Reporte calculaRerporte()
@@ -25,11 +37,43 @@
         }
 
 
-        public Reporte calculaRerporte(int idEmp = 0, int mes = 0)
+        public IEnumerable<Movimientos> calculaRerporte(int mesIni = 0, int mesFin = 0, int idEmp = 0)
         {
-            
+            var tabMovs = context.Movimientos.ToList();
+            IEnumerable<Movimientos> movs;
 
-            return this;
+            movs = from m in tabMovs orderby m.NumEmpleado ascending, m.Mes ascending select m;
+            var movsTemp = movs;
+
+            if (mesIni != 0)
+            {
+                movsTemp = movs;
+                if (mesFin != 0)
+                {
+                    movs = from m in movsTemp where m.Mes >= mesIni && m.Mes <= mesFin
+                           orderby m.NumEmpleado ascending, m.Mes ascending 
+                           select m;
+                }
+                else
+                {
+                    movs = from m in movsTemp where m.Mes == mesIni 
+                           orderby m.NumEmpleado ascending, m.Mes ascending
+                           select m;
+                }
+            }
+
+
+            if (idEmp != 0)
+            {
+                movsTemp = movs;
+                movs = from m in movsTemp where int.Parse(m.NumEmpleado) == idEmp
+                       orderby m.NumEmpleado ascending, m.Mes ascending
+                       select m;
+            }
+
+
+            //return this;
+            return movs;
         }
 
 

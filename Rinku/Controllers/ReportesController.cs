@@ -27,18 +27,12 @@ namespace Rinku.Controllers
 
         // GET api/<ReportesController>/5
         [HttpGet]
-        public Reporte Get(int mes, int id)
+        public IEnumerable<Movimientos> Get(int mesIni, int mesFin, int idEmp)
         {
-            Reporte repo = new Reporte();
-            repo.calculaRerporte(mes, id);
+            Reporte repo = new Reporte(context);
+            var movsFiltrados = repo.calculaRerporte(mesIni, mesFin, idEmp);
 
-            return repo;
-        }
-
-        // POST api/<ReportesController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
+            return movsFiltrados.ToList();
         }
 
         // PUT api/<ReportesController>/5
@@ -47,10 +41,5 @@ namespace Rinku.Controllers
         {
         }
 
-        // DELETE api/<ReportesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

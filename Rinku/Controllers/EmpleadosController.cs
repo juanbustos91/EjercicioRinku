@@ -23,25 +23,6 @@ namespace Rinku.Controllers
             return context.Empleados.ToList();
         }
 
-        //[HttpGet]
-        //[Route("max")]
-        //public int max()
-        //{
-        //    //var max = (from e in context.Empleados select e).Max();
-        //    //var max = (context.Empleados).Max();
-
-
-        //    var max = (from d in context.Empleados select d.Id).Max();
-                             
-
-        //    List<int> lst = (from d in context.Empleados
-        //                           orderby d.Id
-        //                           select d.Id).ToList();
-
-
-        //    return max;
-        //}
-
         // GET api/<EmpleadosController>/5
         [HttpGet("{id}")]
         public Empleados Get(int id)
