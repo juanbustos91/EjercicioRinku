@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+        
+    <title>Movimientos</title>
+
+    <style>
+        body{
+            background-color: #f7f6f6;
+
+        }
+        table thead{
+            background-color: #0a4f70;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Rinku</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="Empleados.html">Empleados</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="Movimientos.html">Movimientos</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="Reportes.html">Reportes</a>
+                </li>
+                </ul>
+                <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container mt-4 shadow-lg p-3 mb-5 bg-body rounded">
+        <button id="btnCrear" type="button" class="btn btn-primary" data-bs-toggle="modal" >Crear</button>
+        
+        <br/>
+
+        <table id="tablaMovimientos" class="table mt-2 table-bordered table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th>Id</th>
+                    <th>Número empleado</th>
+                    <th>Nombre empleado</th>
+                    <th>Mes</th>
+                    <th>Cantidad entregas</th>
+                    <th>Sueldo bruto</th>
+                    <th>ISR obligatorio 9%</th>
+                    <th>ISR Adicional 3%</th>
+                    <th>Vales</th>
+                    <th>Sueldo Neto</th>
+                    <th>Acciones</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    
+    
+    <!-- Modal data-bs-target="#modalMovimientos"  -->
+    <div id="modalMovimientos" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Movimientos</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="formMovimientos">
+              <div class="mb-3">
+                <label for="idMov" class="col-form-label">Id:</label>
+                <input type="text" class="form-control" id="idMov" readonly>
+              </div>
+            
+            
+              <div class="mb-3">
+                <label for="selectEmpleado" class="col-form-label">Empleado:</label>
+                <select class="form-control" id="selectEmpleado" required>
+                </select>
+              </div>
+
+
+              <div class="mb-3">
+                <label for="mes" class="col-form-label">Mes:</label>
+                <select class="form-control" id="mes" required>
+                    <option value="1">Enero</option>
+                    <option value="2">Febrero</option>
+                    <option value="3">Marzo</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Mayo</option>
+                    <option value="6">Junio</option>
+                    <option value="7">Julio</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="cantEnt" class="col-form-label">Cantidad de entregas:</label>
+                <input type="number" class="form-control" id="cantEnt" required>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+            </form>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    
+    <script src="Movimientos.js" defer></script>
+</body>
+</html>
