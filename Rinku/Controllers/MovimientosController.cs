@@ -56,8 +56,6 @@ namespace Rinku.Controllers
                 return BadRequest();
             }
 
-
-
             var intNumEmp = int.Parse(movimientos.NumEmpleado);
             var emp = await _context.Empleados.FindAsync(intNumEmp);
 
@@ -66,52 +64,11 @@ namespace Rinku.Controllers
                 return NotFound("Empleado no existe");
             }
 
-            var _mes = movimientos.Mes;
+            MovsExtendido movsExt = new MovsExtendido(movimientos);
+            movsExt.calcularSueldo(id, emp);
 
-            int horasxmes = 8 * 6 * 4;
-            int sueldoBase = 30 * horasxmes;
-            int sumaComisionEntregas = movimientos.CantidadEntregas * 5;
-            int bono = 0;
-
-            switch (emp.Rol)
-            {
-                case 1: // Chofer. Bono $10 x hora
-                    bono = horasxmes * 10;
-                    break;
-
-                case 2: // Cargador. Bono $5 x hora
-                    bono = horasxmes * 5;
-                    break;
-
-                case 3: // Auxiliar. Bono $10 x hora
-                    bono = 0;
-                    break;
-
-                default:
-                    break;
-            }
-
-            movimientos.SueldoBruto = (decimal)(sueldoBase + sumaComisionEntregas + bono);
-            movimientos.Isr = (decimal)((double)movimientos.SueldoBruto * .09);
-
-            double subTotal = (double)(movimientos.SueldoBruto - movimientos.Isr);
-
-            if (subTotal > 10000)
-            {
-                movimientos.IsrAdicional = (decimal)(subTotal * .03);
-            }
-            else
-            {
-                movimientos.IsrAdicional = 0;
-            }
-
-
-            movimientos.Vales = (decimal)((double)movimientos.SueldoBruto * .04);
-            movimientos.SueldoNeto = movimientos.SueldoBruto - movimientos.Isr - movimientos.IsrAdicional + movimientos.Vales;
-
-
-            await _context.Procedures.spActualizarMovimientosAsync(id, movimientos.NumEmpleado,
-                movimientos.Mes, movimientos.CantidadEntregas, movimientos.SueldoBruto, movimientos.Isr, movimientos.IsrAdicional, movimientos.Vales, movimientos.SueldoNeto);
+            await _context.Procedures.spActualizarMovimientosAsync(id, movsExt.NumEmpleado,
+                movsExt.Mes, movsExt.CantidadEntregas, movsExt.SueldoBruto, movsExt.Isr, movsExt.IsrAdicional, movsExt.Vales, movsExt.SueldoNeto);
             //_context.Entry(movimientos).State = EntityState.Modified;
 
             try
@@ -147,53 +104,11 @@ namespace Rinku.Controllers
                 return NotFound("Empleado no existe");
             }
 
-            var _mes = movimientos.Mes;
+            MovsExtendido movsExt = new MovsExtendido(movimientos);
+            movsExt.calcularSueldo(0, emp);
 
-            int horasxmes = 8 * 6 * 4;
-            int sueldoBase = 30 * horasxmes;
-            int sumaComisionEntregas = movimientos.CantidadEntregas * 5;
-            int bono = 0;
-
-            switch (emp.Rol)
-            {
-                case 1: // Chofer. Bono $10 x hora
-                    bono = horasxmes * 10;
-                    break;
-
-                case 2: // Cargador. Bono $5 x hora
-                    bono = horasxmes * 5;
-                    break;
-
-                case 3: // Auxiliar. Bono $10 x hora
-                    bono = 0;
-                    break;
-
-                default:
-                    break;
-            }
-
-            movimientos.SueldoBruto = (decimal)(sueldoBase + sumaComisionEntregas + bono);
-            movimientos.Isr = (decimal)((double)movimientos.SueldoBruto * .09);
-
-            double subTotal = (double)(movimientos.SueldoBruto - movimientos.Isr);
-
-            if (subTotal > 10000)
-            {
-                movimientos.IsrAdicional = (decimal)(subTotal * .03);
-            }
-            else
-            {
-                movimientos.IsrAdicional = 0;
-            }
-
-
-            movimientos.Vales = (decimal)((double)movimientos.SueldoBruto * .04);
-            movimientos.SueldoNeto = movimientos.SueldoBruto - movimientos.Isr - movimientos.IsrAdicional + movimientos.Vales;
-
-
-
-            await _context.Procedures.spInsertaMovimientosAsync(movimientos.NumEmpleado, 
-                movimientos.Mes, movimientos.CantidadEntregas, movimientos.SueldoBruto, movimientos.Isr, movimientos.IsrAdicional, movimientos.Vales, movimientos.SueldoNeto);
+            await _context.Procedures.spInsertaMovimientosAsync(movsExt.NumEmpleado,
+                movsExt.Mes, movsExt.CantidadEntregas, movsExt.SueldoBruto, movsExt.Isr, movsExt.IsrAdicional, movsExt.Vales, movsExt.SueldoNeto);
             //_context.Movimientos.Add(movimientos);
             await _context.SaveChangesAsync();
 
