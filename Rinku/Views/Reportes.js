@@ -3,12 +3,25 @@ const url = "https://localhost:7168/api/Reportes/"
 const urlEmpleados = "https://localhost:7168/api/Empleados/"
 const urlMovimientos = "https://localhost:7168/api/Movimientos/"
 
-const contenedor           = document.querySelector('tbody')
+const contenedor           = document.getElementById('tbodyTablaMovs')
+const tbodyTabCalculos     = document.getElementById('tbodyTabCalculos')
+
 const filtroSelectEmpleado = document.getElementById('filtroSelectEmpleado')
 const filtroMesIni         = document.getElementById('filtroMesIni')
 const filtroMesFin         = document.getElementById('filtroMesFin')
 let resultados = ''
 let listEmpleados = ''
+
+
+//  Variables para llevar la sumatoria de los reportes
+let sumCantEnt      = 0
+let sumSueldoBruto  = 0
+let sumISR          = 0
+let sumISRadicional = 0
+let sumVales        = 0
+let sumSueldoNeto   = 0
+let sumasHTML       = ""
+
 
 
 const modalMovimientos = new bootstrap.Modal(document.getElementById('modalMovimientos'))
@@ -60,6 +73,15 @@ function getNombreEmp(_idEmp) {
 // Función para mostrar resultados:
 const mostrar = (movimientos) => {
     resultados = ''
+
+    sumCantEnt      = 0
+    sumSueldoBruto  = 0
+    sumISR          = 0
+    sumISRadicional = 0
+    sumVales        = 0
+    sumSueldoNeto   = 0
+
+
     movimientos.forEach(mov => {
         resultados += `
             <tr>
@@ -69,19 +91,39 @@ const mostrar = (movimientos) => {
                 <td>${definirMes(mov.mes)}</td>
                 <td>${mov.cantidadEntregas}</td>
                 <td>${mov.sueldoBruto}</td>
-                <td>- ${mov.isr}</td>
-                <td>- ${mov.isrAdicional}</td>
+                <td> -${mov.isr}</td>
+                <td> -${mov.isrAdicional}</td>
                 <td>${mov.vales}</td>
                 <td>${mov.sueldoNeto}</td>
                 <td class="text-center"> <a class="btnEditar btn btn-primary">Ver Empleado</a> </td>
             </tr>
             `
+
+        sumCantEnt      += mov.cantidadEntregas
+        sumSueldoBruto  += mov.sueldoBruto
+        sumISR          += mov.isr
+        sumISRadicional += mov.isrAdicional
+        sumVales        += mov.vales
+        sumSueldoNeto   += mov.sueldoNeto
+                 
     });
 
     contenedor.innerHTML = resultados
 
-}
+    sumasHTML = ""
+    sumasHTML = `
+        <tr>
+            <td>${sumCantEnt}</td>
+            <td>${sumSueldoBruto}</td>
+            <td> -${sumISR}</td>
+            <td> -${sumISRadicional}</td>
+            <td>${sumVales}</td>
+            <td>${sumSueldoNeto}</td>
+        </tr>
+    `
+    tbodyTabCalculos.innerHTML = sumasHTML
 
+}
 
 const definirMes = (numMes) => {
     switch (numMes) {
