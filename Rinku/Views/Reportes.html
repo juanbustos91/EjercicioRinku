@@ -113,6 +113,32 @@
                     </thead>
                 </table>
 
+                <table id="tablaFiltros2" class="table">
+                    <thead>
+                        <tr class="text-center">
+                            <th>
+                                <label for="filtroOrderBy" class="col-form-label">Ordenar por:</label>
+                                <select class="form-control" id="filtroOrderBy">
+                                    <option value="0">Sin ordenamiento</option>
+                                    <option value="1">Ordenar por Id del movimiento</option>
+                                    <option value="2">Ordenar por mes</option>
+                                </select>
+                            </th>
+                            <th>
+                                <label for="filtroGroupBy" class="col-form-label">Agrupar por:</label>
+                                <select class="form-control" id="filtroGroupBy">
+                                    <option value="0">Sin agrupamiento</option>
+                                    <option value="1">Agrupar por mes</option>
+                                    <option value="2">Agrupar por empleado</option>
+                                </select>
+                            </th>
+
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+
 
                 <button type="submit" id="btnFiltrar"  class="btn btn-primary">Filtrar</button>
         </form>

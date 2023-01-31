@@ -50,13 +50,15 @@ namespace Rinku
                 movsTemp = movs;
                 if (mesFin != 0)
                 {
-                    movs = from m in movsTemp where m.Mes >= mesIni && m.Mes <= mesFin
-                           orderby m.NumEmpleado ascending, m.Mes ascending 
+                    movs = from m in movsTemp
+                           where m.Mes >= mesIni && m.Mes <= mesFin
+                           orderby m.NumEmpleado ascending, m.Mes ascending
                            select m;
                 }
                 else
                 {
-                    movs = from m in movsTemp where m.Mes == mesIni 
+                    movs = from m in movsTemp
+                           where m.Mes == mesIni
                            orderby m.NumEmpleado ascending, m.Mes ascending
                            select m;
                 }
@@ -66,7 +68,8 @@ namespace Rinku
             if (idEmp != 0)
             {
                 movsTemp = movs;
-                movs = from m in movsTemp where int.Parse(m.NumEmpleado) == idEmp
+                movs = from m in movsTemp
+                       where int.Parse(m.NumEmpleado) == idEmp
                        orderby m.NumEmpleado ascending, m.Mes ascending
                        select m;
             }
