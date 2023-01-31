@@ -77,6 +77,7 @@ namespace Rinku.Models
                     .HasColumnName("vales");
             });
 
+            OnModelCreatingGeneratedProcedures(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
         }
 

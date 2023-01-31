@@ -21,6 +21,22 @@
       {
          "Name": "[dbo].[Movimientos]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[spActualizarEmpleado]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[spActualizarMovimientos]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[spInsertaEmpleado]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[spInsertaMovimientos]",
+         "ObjectType": 1
       }
    ],
    "UiHint": "BAXTER-SSD.Rinku",

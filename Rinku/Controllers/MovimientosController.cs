@@ -110,9 +110,9 @@ namespace Rinku.Controllers
             movimientos.SueldoNeto = movimientos.SueldoBruto - movimientos.Isr - movimientos.IsrAdicional + movimientos.Vales;
 
 
-
-
-            _context.Entry(movimientos).State = EntityState.Modified;
+            await _context.Procedures.spActualizarMovimientosAsync(id, movimientos.NumEmpleado,
+                movimientos.Mes, movimientos.CantidadEntregas, movimientos.SueldoBruto, movimientos.Isr, movimientos.IsrAdicional, movimientos.Vales, movimientos.SueldoNeto);
+            //_context.Entry(movimientos).State = EntityState.Modified;
 
             try
             {
@@ -189,11 +189,12 @@ namespace Rinku.Controllers
 
             movimientos.Vales = (decimal)((double)movimientos.SueldoBruto * .04);
             movimientos.SueldoNeto = movimientos.SueldoBruto - movimientos.Isr - movimientos.IsrAdicional + movimientos.Vales;
-                     
 
 
 
-            _context.Movimientos.Add(movimientos);
+            await _context.Procedures.spInsertaMovimientosAsync(movimientos.NumEmpleado, 
+                movimientos.Mes, movimientos.CantidadEntregas, movimientos.SueldoBruto, movimientos.Isr, movimientos.IsrAdicional, movimientos.Vales, movimientos.SueldoNeto);
+            //_context.Movimientos.Add(movimientos);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetMovimientos", new { id = movimientos.Id }, movimientos);

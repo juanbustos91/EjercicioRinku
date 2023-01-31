@@ -37,7 +37,8 @@ namespace Rinku.Controllers
         {
             try
             {
-                context.Empleados.Add(empleado);
+                //context.Empleados.Add(empleado);
+                context.Procedures.spInsertaEmpleadoAsync(empleado.Numero, empleado.Nombre, empleado.Rol);
                 context.SaveChanges();
 
                 return Ok();
@@ -54,7 +55,8 @@ namespace Rinku.Controllers
         {
             if (empleado.Id == id)
             {
-                context.Entry(empleado).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                context.Procedures.spActualizarEmpleadoAsync(id, empleado.Numero, empleado.Nombre, empleado.Rol);
+                //context.Entry(empleado).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 context.SaveChanges();
 
                 return Ok();
